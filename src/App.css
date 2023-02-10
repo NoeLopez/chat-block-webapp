@@ -1,0 +1,111 @@
+/*Sobreescritos*/
+.ql-toolbar.ql-snow .ql-formats {
+    margin: 0 9px;
+}
+
+.p-splitter-gutter {
+    cursor: none;
+}
+
+.p-editor-container .p-editor-content.ql-snow {
+    border: none;
+}
+
+.p-editor-container .p-editor-toolbar.ql-snow {
+    border: none;
+}
+
+nav .p-menu {
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    background: var(--color-primary);
+}
+
+nav .p-menu .p-submenu-header {
+    background: var(--color-primary);
+    color: whitesmoke;
+}
+
+nav .p-menu .p-menuitem-link {
+    color: whitesmoke;
+}
+
+nav .p-menu .p-menuitem-link * {
+    color: inherit !important;
+}
+
+nav .p-menu .p-menuitem-link:not(.p-disabled):hover {
+    background: var(--color-menu-nav-hover);
+}
+
+.p-menu.p-menu-overlay {
+    border: 1px solid lightgray;
+}
+
+.p-button:focus {
+    box-shadow: none !important;
+}
+
+/*Personalizado*/
+.editor-custom {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+}
+
+.editor-message {
+    padding: 0 24px;
+    width: 100%;
+}
+
+.editor-buttonbar {
+    text-align: right;
+}
+
+.separator {
+    position: absolute;
+    width: 1px;
+    height: 24px;
+    background: rgba(63, 67, 80, 0.32);
+}
+
+.editor-footer {
+    position: fixed;
+    bottom: 18px;
+    width: calc(100% - 240px);
+    max-width: 100%;
+}
+
+.header-chat {
+    display: flex;
+    align-items: center;
+}
+
+/*Generales*/
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-secondary);
+    height: 45px;
+    border-bottom: 1px solid var(--color-secondary);
+}
+
+nav {
+    position: fixed;
+    top: 45px;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    float: left;
+    flex-direction: column;
+    height: calc(100vh - 45px);
+    border-right: 1px solid var(--color-secondary);
+    background-color: var(--color-primary);
+}
+
+main {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+    height: calc(100vh - 45px);
+}
