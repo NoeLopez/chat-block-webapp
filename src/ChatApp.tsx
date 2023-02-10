@@ -1,13 +1,9 @@
 import React, {useRef, useState} from 'react';
 
-//theme
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-
-//core
-import "primereact/resources/primereact.min.css";
-
-//icons
-import "primeicons/primeicons.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
+import "primereact/resources/primereact.min.css"; //core
+import "primeflex/primeflex.min.css" //flex
+import "primeicons/primeicons.css"; //icons
 
 import {Menu} from 'primereact/menu';
 import {Button} from 'primereact/button';
@@ -15,9 +11,10 @@ import {Editor} from 'primereact/editor';
 import showdown from 'showdown';
 import {InputText} from "primereact/inputtext";
 import {MenuItem} from "primereact/menuitem";
+import {Divider} from "primereact/divider";
 
 import './App.css';
-import {Divider} from "primereact/divider";
+import {ScrollPanel} from "primereact/scrollpanel";
 
 interface Props {
 }
@@ -97,6 +94,22 @@ const ChatApp: React.FC<Props> = () => {
         {label: 'Ver Miembros', icon: 'pi pi-fw pi-users'}
     ]
 
+    // Para el scroll del chat
+    const [overflow, setOverflow] = useState('hidden');
+    const chatRef = useRef(null);
+
+    const handleMouseEnter = () => {
+        setOverflow('auto');
+    };
+
+    // @ts-ignore
+    const handleMouseLeave = (event) => {
+        // @ts-ignore
+        if (!chatRef.current.contains(event.relatedTarget)) {
+            setOverflow('hidden');
+        }
+    };
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const converter = new showdown.Converter();
@@ -147,32 +160,50 @@ const ChatApp: React.FC<Props> = () => {
             <main>
 
                 {/*Header chat*/}
-                <div>
-                    <div className="header-chat">
-                        <Button label="Base de Datos"
-                                icon="pi pi-angle-down"
-                                className="p-button-secondary p-button-text"
-                                style={{marginLeft: '5px'}}
-                                onClick={(e) => menu.current.toggle(e)}/>
-                        <Menu model={itemsMenuChannel} popup ref={menu}/>
+                <div className="header-chat">
+                    <div className="flex justify-content-between">
+                        <div>
+                            <Button label="Base de Datos"
+                                    icon="pi pi-angle-down"
+                                    className="p-button-secondary p-button-text"
+                                    style={{marginLeft: '5px'}}
+                                    onClick={(e) => menu.current.toggle(e)}/>
+                            <Menu model={itemsMenuChannel} popup ref={menu}/>
+                        </div>
+                        <div>
+                            <Button icon="pi pi-tag"
+                                    badge="8"
+                                    className="p-button-text mr-3"
+                                    onClick={(e) => menu.current.toggle(e)}/>
+                            <Menu model={itemsMenuChannel} popup ref={menu}/>
+
+                            <Button icon="pi pi-users"
+                                    badge="8"
+                                    className="p-button-text mr-3"
+                                    onClick={(e) => menu.current.toggle(e)}/>
+
+                            <Menu model={itemsMenuChannel} popup ref={menu}/>
+                        </div>
+
                     </div>
-
-
                     <Divider style={{margin: '0'}}/>
                 </div>
 
                 {/*Historial de Chat*/}
+
                 <div>
-                    {chatHistory.map((history, index) => (
-                        <div key={index}>{history}</div>
-                    ))}
+                    <ScrollPanel className="chat">
+                        {chatHistory.map((history, index) => (
+                            <div key={index}>{history}</div>
+                        ))}
+                    </ScrollPanel>
                 </div>
 
                 {/*Input de Mensaje*/}
                 <div className="editor-footer">
                     <div className="editor-message">
                         <div style={{paddingBottom: '5px'}}>
-                            <small>Noe Lopez esta escribiendo ...</small>
+                            {/*<small>Noe Lopez esta escribiendo ...</small>*/}
                         </div>
                         <div>
                             <form onSubmit={handleSubmit} onKeyDown={(event => {
@@ -186,7 +217,7 @@ const ChatApp: React.FC<Props> = () => {
                                     <Editor
                                         headerTemplate={renderHeader()}
                                         value={message}
-                                        onTextChange={(e) => setMessage(e.htmlValue)}
+                                        onTextChange={(e) => setMessage(e.textValue)}
                                     />
 
                                     <div className="editor-buttonbar">
